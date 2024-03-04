@@ -3,115 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
-    <title>Косой Лебедь</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <title>Косой Лебедь - Рецепты</title>
     <style>
-        body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #f3f3f3;
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
+
+nav {
+	background-color: #4c5866;
+	padding: 10px 0;
+	text-align: center;
+}
+
+nav a {
+	color: white;
+	text-decoration: none;
+	margin: 0 20px;
+	font-size: 18px;
 }
 
 h1 {
-    text-align: center;
-    color: #333;
-    margin-top: 20px;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-h2 {
-    margin-top: 0;
-    color: #333;
-    font-size: 20px;
-    font-weight: bold;
+	text-align: center;
+	color: #333;
+	margin-top: 20px;
+	font-size: 28px;
+	font-weight: bold;
 }
 
 ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-	border-top: 2px solid #ccc;
-    padding-top: 20px;
+	list-style-type: none;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding-top: 20px;
 }
 
 li {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
-    width: 300px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    position: relative;
+	margin: 20px;
+	padding: 20px;
+	border-radius: 10px;
+	overflow: hidden;
+	width: 300px;
+	background-color: #fff;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease;
+	position: relative;
 }
 
-
 li:hover {
-    transform: translateY(-5px);
+	transform: translateY(-5px);
 }
 
 img {
-    width: 100%;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    object-fit: cover;
+	width: 100%;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	object-fit: cover;
 }
 
 .info {
-    padding: 20px;
-    flex-grow: 1; /* Добавлено */
-    display: flex; /* Добавлено */
-    flex-direction: column; /* Добавлено */
+	padding: 20px;
 }
 
 p {
-    color: #666;
-    margin: 10px 0;
+	margin: 10px 0;
 }
 
 .total-weight, .calories, .meal-time {
-    margin-top: 10px;
-    color: #777;
+	margin-top: 10px;
+	color: #666;
 }
 
 .order-button {
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    transition: background-color 0.3s ease;
+	background-color: #4caf50;
+	color: #fff;
+	border: none;
+	padding: 12px 24px;
+	border-radius: 5px;
+	cursor: pointer;
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	transition: background-color 0.3s ease;
 }
-
 
 .order-button:hover {
-    background-color: #45a049;
+	background-color: #45a049;
+}
+.nav-link {
+    transition: color 0.3s ease;
+}
+.nav-link:hover {
+    color: #ffa500;
 }
 
-
-
+.nav-link.active {
+    font-weight: bold;
+    text-decoration: underline;
+    background-color: #4c5866;
+    padding: 8px 16px;
+    border-radius: 5px;
+    color: white;
+}
     </style>
 </head>
 <body>
     <h1>Приложение рецептов Косой Лебедь</h1>
-    <ul id="menu-list">
-    </ul>
-
+    <nav>
+    <a href="главная страница с блюдами.html" class="nav-link">Главная</a> |
+    <a href="profile.html" class="nav-link">Личный кабинет</a> |
+    <a href="about.html" class="nav-link">О нас</a> |
+    <a href="filters.html" class="nav-link">Настройки фильтров</a>
+	</nav>
+    <ul id="menu-list"></ul>
     <script>
+	const currentUrl = window.location.href;
+	const navLinks = document.querySelectorAll('.nav-link');
+	navLinks.forEach(link => {
+		if (link.href === currentUrl) {
+			link.classList.add('active');
+		}
+	});
+
         const menuData = [
             {
                 name: "Салат Цезарь",
-                image: "caesarsalad.jpg",
+                image: "caesar.jpg",
                 description: "Свежий салат с куриным филе, листьями салата айсберг и хрустящими крутонами.",
                 ingredients: [
                     ["Куриное филе", 200],
