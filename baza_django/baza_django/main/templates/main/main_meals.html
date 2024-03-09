@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <title>Косой Лебедь - Рецепты</title>
+    <style>
+body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #f3f3f3;
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
+nav {
+	background-color: #537373;
+	padding: 10px 0;
+	text-align: center;
+}
+nav a {
+	color: white;
+	text-decoration: none;
+	margin: 0 20px;
+	font-size: 18px;
+}
+ul {
+	list-style-type: none;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding-top: 20px;
+}
+li {
+	margin: 20px;
+	padding: 20px;
+	border-radius: 10px;
+	overflow: hidden;
+	width: 300px;
+	background-color: #fff;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease;
+	position: relative;
+}
+li:hover {
+	transform: translateY(-5px);
+}
+img {
+	width: 100%;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	object-fit: cover;
+}
+.info {
+	padding: 20px;
+}
+p {
+	margin: 10px 0;
+}
+.total-weight, .calories, .meal-time {
+	margin-top: 10px;
+	color: #666;
+}
+.order-button {
+	background-color: #4caf50;
+	color: #fff;
+	border: none;
+	padding: 12px 24px;
+	border-radius: 5px;
+	cursor: pointer;
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	transition: background-color 0.3s ease;
+}
+.order-button:hover {
+	background-color: #45a049;
+}
+.nav-link {
+    transition: color 0.3s ease;
+}
+.nav-link:hover {
+    color: #ffa500;
+}
+footer {
+    background-color: #2f4f4f;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    bottom: 0;
+    width: 100%;
+}
+header {
+    background-color: #2f4f4f;
+    padding: 10px 0;
+    text-align: center;
+}
+header h1 {
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Приложение рецептов Косой Лебедь</h1>
+    </header>
+    <nav>
+    <a href="main" class="nav-link">Главная</a> |
+    <a href="profile" class="nav-link">Личный кабинет</a> |
+    <a href="about" class="nav-link">О нас</a> |
+    <a href="filters" class="nav-link">Настройки фильтров</a>
+	</nav>
+    <ul id="menu-list"></ul>
+    <footer>
+        <p>&copy; 2024 Косой Лебедь</p>
+    </footer>
+    <script>
+	const currentUrl = window.location.href;
+	const navLinks = document.querySelectorAll('.nav-link');
+	navLinks.forEach(link => {
+		if (link.href === currentUrl) {
+			link.classList.add('active');
+		}
+	});
+
+        const menuData = [
+            {
+                name: "Салат Цезарь",
+                image: "caesar.jpg",
+                description: "Свежий салат с куриным филе, листьями салата айсберг и хрустящими крутонами.",
+                ingredients: [
+                    ["Куриное филе", 200],
+                    ["Салат айсберг", 100],
+                    ["Крутоны", 50]
+                ],
+                totalWeight: "350 г",
+                calories: "350 ккал",
+                mealTime: "День"
+            },
+            {
+                name: "Паста Карбонара",
+                image: "carbonara.jpg",
+                description: "Итальянская паста с беконом, яйцами и сливками.",
+                ingredients: [
+                    ["Спагетти", 150],
+                    ["Бекон", 100],
+                    ["Яйца", 50],
+                    ["Сливки", 50]
+                ],
+                totalWeight: "350 г",
+                calories: "500 ккал",
+                mealTime: "День"
+            },
+            {
+                name: "Суп-лапша",
+                image: "soup.jpg",
+                description: "Питательный суп с говядиной, лапшой и свежими овощами.",
+                ingredients: [
+                    ["Говядина", 200],
+                    ["Лапша", 150],
+                    ["Морковь", 50],
+                    ["Лук", 50]
+                ],
+                totalWeight: "450 г",
+                calories: "300 ккал",
+                mealTime: "День"
+            },
+            {
+                name: "Омлет",
+                image: "omelette.jpg",
+                description: "Нежный омлет с помидорами и сыром.",
+                ingredients: [
+                    ["Яйца", 100],
+                    ["Молоко", 50],
+                    ["Помидоры", 50],
+                    ["Сыр", 50]
+                ],
+                totalWeight: "250 г",
+                calories: "250 ккал",
+                mealTime: "Утро"
+            },
+            {
+                name: "Рис с овощами",
+                image: "rice_vegetables.jpg",
+                description: "Паровой рис с морковью, горошком и луком.",
+                ingredients: [
+                    ["Рис", 200],
+                    ["Морковь", 100],
+                    ["Горошек", 50],
+                    ["Лук", 50]
+                ],
+                totalWeight: "450 г",
+                calories: "400 ккал",
+                mealTime: "День"
+            },
+            {
+                name: "Куриные крылышки",
+                image: "chicken_wings.jpg",
+                description: "Жареные куриные крылышки с соусом барбекю.",
+                ingredients: [
+                    ["Куриные крылья", 250],
+                    ["Соус барбекю", 50]
+                ],
+                totalWeight: "300 г",
+                calories: "450 ккал",
+                mealTime: "Вечер"
+            },
+            {
+                name: "Гречневая каша",
+                image: "buckwheat_porridge.jpg",
+                description: "Ароматная гречневая каша с маслом.",
+                ingredients: [
+                    ["Гречка", 150],
+                    ["Вода", 300],
+                    ["Соль", 5],
+                    ["Масло", 10]
+                ],
+                totalWeight: "465 г",
+                calories: "350 ккал",
+                mealTime: "Утро"
+            },
+            {
+                name: "Суп-харчо",
+                image: "harchosoup.jpg",
+                description: "Пикантный суп с говядиной, рисом и специями.",
+                ingredients: [
+                    ["Говядина", 200],
+                    ["Рис", 150],
+                    ["Томатная паста", 50],
+                    ["Специи", 5]
+                ],
+                totalWeight: "400 г",
+                calories: "280 ккал",
+                mealTime: "День"
+            },
+            {
+                name: "Пицца",
+                image: "pizza.jpg",
+                description: "Аппетитная пицца с ветчиной, сыром и соусом.",
+                ingredients: [
+                    ["Тесто", 300],
+                    ["Соус", 100],
+                    ["Сыр", 150],
+                    ["Ветчина", 50]
+                ],
+                totalWeight: "600 г",
+                calories: "600 ккал",
+                mealTime: "Вечер"
+            },
+            {
+                name: "Фруктовый салат",
+                image: "fruitsalad.jpg",
+                description: "Свежий салат с яблоками, бананами, апельсинами и грушами.",
+                ingredients: [
+                    ["Яблоки", 200],
+                    ["Бананы", 100],
+                    ["Апельсины", 100],
+                    ["Груши", 50]
+                ],
+                totalWeight: "450 г",
+                calories: "200 ккал",
+                mealTime: ["Утро", "Вечер"]
+            }
+        ];
+
+        const menuList = document.getElementById('menu-list');
+
+        function createMenuItem(item) {
+    const li = document.createElement('li');
+    li.innerHTML = `
+        <img src="${item.image}" alt="${item.name}">
+        <div class="info">
+            <h2>${item.name}</h2>
+            <p class="description">${item.description}</p>
+            <p class="total-weight">Общая граммовка: ${item.totalWeight}</p>
+            <p class="calories">Калорийность: ${item.calories}</p>
+            <p class="meal-time">Время приема: ${Array.isArray(item.mealTime) ? item.mealTime.join(', ') : item.mealTime}</p>
+            <div class="button-container">
+                <button class="order-button">Хочу готовить!</button>
+            </div>
+        </div>
+    `;
+    menuList.appendChild(li);
+}
+
+
+        menuData.forEach(item => {
+            createMenuItem(item);
+        });
+    </script>
+</body>
+</html>
