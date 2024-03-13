@@ -1,7 +1,7 @@
 from django.shortcuts import render
 # Create your views here.
 def main_meals(request):
-    return render(request, 'main/main_meals.html')
+    return render(request, 'main/main_meals.html', {'aaeae': 'ура это данные из словаря'})
 def about(request):
     return render(request, 'main/about.html')
 def profile(request):
