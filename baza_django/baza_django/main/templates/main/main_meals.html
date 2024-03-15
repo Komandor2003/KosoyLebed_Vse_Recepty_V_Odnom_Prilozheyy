@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <script src="https://kit.fontawesome.com/12a39ee336.js" crossorigin="anonymous"></script>
     <title>Косой Лебедь - Рецепты</title>
     <style>
         body {
@@ -100,6 +101,15 @@
         header h1 {
             color: white;
         }
+        .icon-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .icon {
+            font-size: 24px;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -112,19 +122,11 @@
         <a href="about" class="nav-link">О нас</a> |
         <a href="filters" class="nav-link">Настройки фильтров</a>
     </nav>
-    <p>{{ aaeae }}</p>
     <ul id="menu-list"></ul>
     <footer>
         <p>&copy; 2024 Косой Лебедь</p>
     </footer>
     <script>
-        const currentUrl = window.location.href;
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            if (link.href === currentUrl) {
-                link.classList.add('active');
-            }
-        });
         const menuData = [
             {
                 name: "Салат Цезарь",
@@ -137,7 +139,12 @@
                 ],
                 totalWeight: "350 г",
                 calories: "350 ккал",
-                mealTime: "День"
+                mealTime: "День",
+                containsMeat: true,
+                seafood: false,
+                healthy: false,
+                drink: false,
+                difficulty: "Легкий"
             },
             {
                 name: "Паста Карбонара",
@@ -151,7 +158,12 @@
                 ],
                 totalWeight: "350 г",
                 calories: "500 ккал",
-                mealTime: "День"
+                mealTime: "День",
+                containsMeat: true,
+                seafood: false,
+                healthy: false,
+                drink: false,
+                difficulty: "Средний"
             },
             {
                 name: "Суп-лапша",
@@ -165,7 +177,12 @@
                 ],
                 totalWeight: "450 г",
                 calories: "300 ккал",
-                mealTime: "День"
+                mealTime: "День",
+                containsMeat: true,
+                seafood: false,
+                healthy: false,
+                drink: false,
+                difficulty: "Средний"
             },
             {
                 name: "Омлет",
@@ -179,7 +196,12 @@
                 ],
                 totalWeight: "250 г",
                 calories: "250 ккал",
-                mealTime: "Утро"
+                mealTime: "Утро",
+                containsMeat: false,
+                seafood: false,
+                healthy: false,
+                drink: false,
+                difficulty: "Легкий"
             },
             {
                 name: "Рис с овощами",
@@ -193,7 +215,12 @@
                 ],
                 totalWeight: "450 г",
                 calories: "400 ккал",
-                mealTime: "День"
+                mealTime: "День",
+                containsMeat: false,
+                seafood: false,
+                healthy: false,
+                drink: false,
+                difficulty: "Легкий"
             },
             {
                 name: "Куриные крылышки",
@@ -205,7 +232,12 @@
                 ],
                 totalWeight: "300 г",
                 calories: "450 ккал",
-                mealTime: "Вечер"
+                mealTime: "Вечер",
+                containsMeat: true,
+                seafood: false,
+                healthy: false,
+                drink: false,
+                difficulty: "Средний"
             },
             {
                 name: "Гречневая каша",
@@ -219,7 +251,12 @@
                 ],
                 totalWeight: "465 г",
                 calories: "350 ккал",
-                mealTime: "Утро"
+                mealTime: "Утро",
+                containsMeat: true,
+                seafood: true,
+                healthy: true,
+                drink: true,
+                difficulty: "Легкий"
             },
             {
                 name: "Суп-харчо",
@@ -233,7 +270,12 @@
                 ],
                 totalWeight: "400 г",
                 calories: "280 ккал",
-                mealTime: "День"
+                mealTime: "День",
+                containsMeat: true,
+                seafood: false,
+                healthy: false,
+                drink: false,
+                difficulty: "Средний"
             },
             {
                 name: "Пицца",
@@ -247,7 +289,12 @@
                 ],
                 totalWeight: "600 г",
                 calories: "600 ккал",
-                mealTime: "Вечер"
+                mealTime: "Вечер",
+                containsMeat: true,
+                seafood: false,
+                healthy: false,
+                drink: true,
+                difficulty: "Сложный"
             },
             {
                 name: "Фруктовый салат",
@@ -261,7 +308,12 @@
                 ],
                 totalWeight: "450 г",
                 calories: "200 ккал",
-                mealTime: ["Утро", "Вечер"]
+                mealTime: ["Утро", "Вечер"],
+                containsMeat: false,
+                seafood: false,
+                healthy: true,
+                drink: false,
+                difficulty: "Легкий"
             }
         ];
         const menuList = document.getElementById('menu-list');
@@ -280,8 +332,66 @@
                     </div>
                 </div>
             `;
+            const orderButton = li.querySelector('.order-button');
+            orderButton.addEventListener('click', function() {
+                window.location.href = 'first_meal';
+            });
+
+            const iconContainer = document.createElement('div');
+            iconContainer.classList.add('icon-container');
+
+            // Добавляем иконки для мяса, морепродуктов, здоровой пищи и напитка
+            if (item.containsMeat) {
+                const meatIcon = document.createElement('i');
+                meatIcon.classList.add('fas', 'fa-solid', 'fa-drumstick-bite', 'icon');
+                meatIcon.title = 'Содержит мясо';
+                iconContainer.appendChild(meatIcon);
+            }
+            if (item.seafood) {
+                const seaFoodIcon = document.createElement('i');
+                seaFoodIcon.classList.add('fas', 'fa-solid', 'fa-fish', 'icon');
+                seaFoodIcon.title = 'Содержит морепродукты';
+                iconContainer.appendChild(seaFoodIcon);
+            }
+            if (item.healthy) {
+                const healthyIcon = document.createElement('i');
+                healthyIcon.classList.add('fas', 'fa-solid', 'fa-apple-alt', 'icon');
+                healthyIcon.title = 'Здоровая пища';
+                iconContainer.appendChild(healthyIcon);
+            }
+            if (item.drink) {
+                const drinkIcon = document.createElement('i');
+                drinkIcon.classList.add('fas', 'fa-solid', 'fa-coffee', 'icon');
+                drinkIcon.title = 'Напиток';
+                iconContainer.appendChild(drinkIcon);
+            }
+
+            // Добавляем иконку сложности
+            const difficultyIcon = document.createElement('i');
+            difficultyIcon.classList.add('fas', 'fa-puzzle-piece', 'icon');
+            difficultyIcon.title = `Сложность: ${item.difficulty}`;
+            iconContainer.appendChild(difficultyIcon);
+
+            switch(item.difficulty) {
+                case "Легкий":
+                    difficultyIcon.style.color = "green"; // Легкий - зеленый
+                    break;
+                case "Средний":
+                    difficultyIcon.style.color = "orange"; // Средний - оранжевый
+                    break;
+                case "Сложный":
+                    difficultyIcon.style.color = "red"; // Сложный - красный
+                    break;
+                default:
+                    difficultyIcon.style.color = "black"; // По умолчанию - черный
+            }
+
+            li.appendChild(iconContainer); // Добавляем контейнер с иконками в элемент списка
+
             menuList.appendChild(li);
         }
+
+        // Создаем элементы меню на основе данных
         menuData.forEach(item => {
             createMenuItem(item);
         });
