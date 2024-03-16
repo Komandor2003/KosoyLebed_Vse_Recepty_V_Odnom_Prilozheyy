@@ -122,7 +122,8 @@
         <a href="about" class="nav-link">О нас</a> |
         <a href="filters" class="nav-link">Настройки фильтров</a>
     </nav>
-    <p>{{ title }}</p>
+    <p>{{ meal }}</p>
+    <p>{{ recipe }}</p>
     <ul id="menu-list"></ul>
     <footer>
         <p>&copy; 2024 Косой Лебедь</p>
@@ -341,7 +342,6 @@
             const iconContainer = document.createElement('div');
             iconContainer.classList.add('icon-container');
 
-            // Добавляем иконки для мяса, морепродуктов, здоровой пищи и напитка
             if (item.containsMeat) {
                 const meatIcon = document.createElement('i');
                 meatIcon.classList.add('fas', 'fa-solid', 'fa-drumstick-bite', 'icon');
@@ -367,7 +367,6 @@
                 iconContainer.appendChild(drinkIcon);
             }
 
-            // Добавляем иконку сложности
             const difficultyIcon = document.createElement('i');
             difficultyIcon.classList.add('fas', 'fa-puzzle-piece', 'icon');
             difficultyIcon.title = `Сложность: ${item.difficulty}`;
@@ -375,24 +374,23 @@
 
             switch(item.difficulty) {
                 case "Легкий":
-                    difficultyIcon.style.color = "green"; // Легкий - зеленый
+                    difficultyIcon.style.color = "green";
                     break;
                 case "Средний":
-                    difficultyIcon.style.color = "orange"; // Средний - оранжевый
+                    difficultyIcon.style.color = "orange";
                     break;
                 case "Сложный":
-                    difficultyIcon.style.color = "red"; // Сложный - красный
+                    difficultyIcon.style.color = "red";
                     break;
                 default:
-                    difficultyIcon.style.color = "black"; // По умолчанию - черный
+                    difficultyIcon.style.color = "black";
             }
 
-            li.appendChild(iconContainer); // Добавляем контейнер с иконками в элемент списка
+            li.appendChild(iconContainer);
 
             menuList.appendChild(li);
         }
 
-        // Создаем элементы меню на основе данных
         menuData.forEach(item => {
             createMenuItem(item);
         });
