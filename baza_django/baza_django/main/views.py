@@ -1,9 +1,10 @@
 from django.shortcuts import render
 # Create your views here.
-from main.mytest import start
+from main.mytest import meal, recipe
 
-tmp = {"title": start()}
+tmp = {"meal": meal(), "recipe": recipe()}
 print(tmp)
+
 
 def main_meals(request):
     return render(request, 'main/main_meals.html', tmp)
