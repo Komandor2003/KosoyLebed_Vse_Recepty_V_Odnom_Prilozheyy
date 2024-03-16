@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <title>Косой Лебедь - О создателях сайта</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #2f4f4f;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            color: white;
+            margin: 0;
+        }
+        nav {
+            background-color: #537373;
+            padding: 10px 0;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #ffa500;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #2f4f4f;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .creator-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .creator {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .contact-info {
+            margin-top: 30px;
+            text-align: center;
+        }
+        footer {
+            background-color: #2f4f4f;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+        .developer-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Косой Лебедь - О создателях сайта</h1>
+    </header>
+    <nav>
+        <a href="main" class="nav-link">Главная</a> |
+        <a href="profile" class="nav-link">Личный кабинет</a> |
+        <a href="about" class="nav-link">О нас</a> |
+        <a href="filters" class="nav-link">Настройки фильтров</a>
+    </nav>
+    <div class="container">
+        <p>Этот сайт создан двумя очень талантливыми разработчиками, их зовут Косачев Михаил и Лебедев Иван.</p>
+        <p>Они сотрудничают вместе в течение многих лет, стремясь создавать инновационные и качественные проекты.</p>
+    </div>
+    <div class="container">
+        <div class="creator-container">
+            <div class="creator">
+                <img src="mikhail.jpg" alt="Косачев Михаил" class="developer-img">
+                <h2>Косачев Михаил</h2>
+                <p>Косачев Михаил - опытный веб-разработчик с глубокими знаниями HTML, CSS и Python.</p>
+            </div>
+            <div class="creator">
+                <img src="ivan.jpg" alt="Лебедев Иван" class="developer-img">
+                <h2>Лебедев Иван</h2>
+                <p>Лебедев Иван - страстный программист, который создает удобные и быстрые приложения.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container contact-info">
+        <h2>Контактная информация</h2>
+        <p>Косачев Михаил: Телефон: +7 (XXX) XXX-XX-XX; Email: example@example.com</p>
+        <p>Лебедев Иван: Телефон: +7 (XXX) XXX-XX-XX; Email: example@example.com</p>
+    </div>
+    <footer>
+        <h4>&copy; 2024 Косой Лебедь</h4>
+    </footer>
+</body>
+</html>
