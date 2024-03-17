@@ -122,202 +122,12 @@
         <a href="about" class="nav-link">О нас</a> |
         <a href="filters" class="nav-link">Настройки фильтров</a>
     </nav>
-    <p>{{ meal }}</p>
-    <p>{{ recipe }}</p>
     <ul id="menu-list"></ul>
     <footer>
         <p>&copy; 2024 Косой Лебедь</p>
     </footer>
     <script>
-        const menuData = [
-            {
-                name: "Салат Цезарь",
-                image: "caesar.jpg",
-                description: "Свежий салат с куриным филе, листьями салата айсберг и хрустящими крутонами.",
-                ingredients: [
-                    ["Куриное филе", 200],
-                    ["Салат айсберг", 100],
-                    ["Крутоны", 50]
-                ],
-                totalWeight: "350 г",
-                calories: "350 ккал",
-                mealTime: "День",
-                containsMeat: true,
-                seafood: false,
-                healthy: false,
-                drink: false,
-                difficulty: "Легкий"
-            },
-            {
-                name: "Паста Карбонара",
-                image: "carbonara.jpg",
-                description: "Итальянская паста с беконом, яйцами и сливками.",
-                ingredients: [
-                    ["Спагетти", 150],
-                    ["Бекон", 100],
-                    ["Яйца", 50],
-                    ["Сливки", 50]
-                ],
-                totalWeight: "350 г",
-                calories: "500 ккал",
-                mealTime: "День",
-                containsMeat: true,
-                seafood: false,
-                healthy: false,
-                drink: false,
-                difficulty: "Средний"
-            },
-            {
-                name: "Суп-лапша",
-                image: "soup.jpg",
-                description: "Питательный суп с говядиной, лапшой и свежими овощами.",
-                ingredients: [
-                    ["Говядина", 200],
-                    ["Лапша", 150],
-                    ["Морковь", 50],
-                    ["Лук", 50]
-                ],
-                totalWeight: "450 г",
-                calories: "300 ккал",
-                mealTime: "День",
-                containsMeat: true,
-                seafood: false,
-                healthy: false,
-                drink: false,
-                difficulty: "Средний"
-            },
-            {
-                name: "Омлет",
-                image: "omelette.jpg",
-                description: "Нежный омлет с помидорами и сыром.",
-                ingredients: [
-                    ["Яйца", 100],
-                    ["Молоко", 50],
-                    ["Помидоры", 50],
-                    ["Сыр", 50]
-                ],
-                totalWeight: "250 г",
-                calories: "250 ккал",
-                mealTime: "Утро",
-                containsMeat: false,
-                seafood: false,
-                healthy: false,
-                drink: false,
-                difficulty: "Легкий"
-            },
-            {
-                name: "Рис с овощами",
-                image: "rice_vegetables.jpg",
-                description: "Паровой рис с морковью, горошком и луком.",
-                ingredients: [
-                    ["Рис", 200],
-                    ["Морковь", 100],
-                    ["Горошек", 50],
-                    ["Лук", 50]
-                ],
-                totalWeight: "450 г",
-                calories: "400 ккал",
-                mealTime: "День",
-                containsMeat: false,
-                seafood: false,
-                healthy: false,
-                drink: false,
-                difficulty: "Легкий"
-            },
-            {
-                name: "Куриные крылышки",
-                image: "chicken_wings.jpg",
-                description: "Жареные куриные крылышки с соусом барбекю.",
-                ingredients: [
-                    ["Куриные крылья", 250],
-                    ["Соус барбекю", 50]
-                ],
-                totalWeight: "300 г",
-                calories: "450 ккал",
-                mealTime: "Вечер",
-                containsMeat: true,
-                seafood: false,
-                healthy: false,
-                drink: false,
-                difficulty: "Средний"
-            },
-            {
-                name: "Гречневая каша",
-                image: "buckwheat_porridge.jpg",
-                description: "Ароматная гречневая каша с маслом.",
-                ingredients: [
-                    ["Гречка", 150],
-                    ["Вода", 300],
-                    ["Соль", 5],
-                    ["Масло", 10]
-                ],
-                totalWeight: "465 г",
-                calories: "350 ккал",
-                mealTime: "Утро",
-                containsMeat: true,
-                seafood: true,
-                healthy: true,
-                drink: true,
-                difficulty: "Легкий"
-            },
-            {
-                name: "Суп-харчо",
-                image: "harchosoup.jpg",
-                description: "Пикантный суп с говядиной, рисом и специями.",
-                ingredients: [
-                    ["Говядина", 200],
-                    ["Рис", 150],
-                    ["Томатная паста", 50],
-                    ["Специи", 5]
-                ],
-                totalWeight: "400 г",
-                calories: "280 ккал",
-                mealTime: "День",
-                containsMeat: true,
-                seafood: false,
-                healthy: false,
-                drink: false,
-                difficulty: "Средний"
-            },
-            {
-                name: "Пицца",
-                image: "pizza.jpg",
-                description: "Аппетитная пицца с ветчиной, сыром и соусом.",
-                ingredients: [
-                    ["Тесто", 300],
-                    ["Соус", 100],
-                    ["Сыр", 150],
-                    ["Ветчина", 50]
-                ],
-                totalWeight: "600 г",
-                calories: "600 ккал",
-                mealTime: "Вечер",
-                containsMeat: true,
-                seafood: false,
-                healthy: false,
-                drink: true,
-                difficulty: "Сложный"
-            },
-            {
-                name: "Фруктовый салат",
-                image: "fruitsalad.jpg",
-                description: "Свежий салат с яблоками, бананами, апельсинами и грушами.",
-                ingredients: [
-                    ["Яблоки", 200],
-                    ["Бананы", 100],
-                    ["Апельсины", 100],
-                    ["Груши", 50]
-                ],
-                totalWeight: "450 г",
-                calories: "200 ккал",
-                mealTime: ["Утро", "Вечер"],
-                containsMeat: false,
-                seafood: false,
-                healthy: true,
-                drink: false,
-                difficulty: "Легкий"
-            }
-        ];
+        const menuData = {{ menuData|safe }};
         const menuList = document.getElementById('menu-list');
         function createMenuItem(item) {
             const li = document.createElement('li');
@@ -342,25 +152,25 @@
             const iconContainer = document.createElement('div');
             iconContainer.classList.add('icon-container');
 
-            if (item.containsMeat) {
+            if (item.containsMeat === 1) {
                 const meatIcon = document.createElement('i');
                 meatIcon.classList.add('fas', 'fa-solid', 'fa-drumstick-bite', 'icon');
                 meatIcon.title = 'Содержит мясо';
                 iconContainer.appendChild(meatIcon);
             }
-            if (item.seafood) {
+            if (item.seafood === 1) {
                 const seaFoodIcon = document.createElement('i');
                 seaFoodIcon.classList.add('fas', 'fa-solid', 'fa-fish', 'icon');
                 seaFoodIcon.title = 'Содержит морепродукты';
                 iconContainer.appendChild(seaFoodIcon);
             }
-            if (item.healthy) {
+            if (item.healthy === 1) {
                 const healthyIcon = document.createElement('i');
                 healthyIcon.classList.add('fas', 'fa-solid', 'fa-apple-alt', 'icon');
                 healthyIcon.title = 'Здоровая пища';
                 iconContainer.appendChild(healthyIcon);
             }
-            if (item.drink) {
+            if (item.drink === 1) {
                 const drinkIcon = document.createElement('i');
                 drinkIcon.classList.add('fas', 'fa-solid', 'fa-coffee', 'icon');
                 drinkIcon.title = 'Напиток';
