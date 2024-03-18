@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Скоро здесь будет страница фильтров блюд</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <script src="https://kit.fontawesome.com/12a39ee336.js" crossorigin="anonymous"></script>
+    <title>Косой Лебедь - Рецепты</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -11,10 +13,6 @@
             margin: 0;
             padding: 0;
             color: #333;
-            text-align: center;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
         nav {
             background-color: #537373;
@@ -27,12 +25,32 @@
             margin: 0 20px;
             font-size: 18px;
         }
-        .content-container {
-            flex-grow: 1;
+        #recipe-container {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            margin-bottom: 60px;
+        }
+        .recipe-step {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            width: calc(100% - 40px);
+        }
+        .recipe-step:hover {
+            transform: translateY(-5px);
+        }
+        .step-text {
+            margin: 10px 0;
+        }
+        .step-number {
+            font-weight: bold;
+            color: #537373;
         }
         footer {
             background-color: #2f4f4f;
@@ -51,24 +69,76 @@
         header h1 {
             color: white;
         }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffa500;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Приложение рецептов Косой Лебедь</h1>
     </header>
+    <div id="recipe-info-container"></div>
     <nav>
         <a href="main" class="nav-link">Главная</a> |
         <a href="profile" class="nav-link">Личный кабинет</a> |
         <a href="about" class="nav-link">О нас</a> |
         <a href="filters" class="nav-link">Настройки фильтров</a>
     </nav>
-    <div class="content-container">
-        <h1>Скоро здесь будет страница блюда</h1>
-        <p>Мы работаем над созданием страницы блюда для вас. Пожалуйста, ожидайте.</p>
-    </div>
+    <div id="recipe-container"></div>
     <footer>
         <p>&copy; 2024 Косой Лебедь</p>
     </footer>
+    <script>
+        const recipeSteps = {{ mealRecipe|safe }};
+
+        const recipeContainer = document.getElementById('recipe-container');
+
+        recipeSteps.forEach((step, index) => {
+            const container = document.createElement('div');
+            container.classList.add('recipe-step');
+
+            const stepNumber = document.createElement('span');
+            stepNumber.classList.add('step-number');
+            stepNumber.textContent = `Шаг ${index + 1}:`;
+            container.appendChild(stepNumber);
+
+            const stepText = document.createElement('p');
+            stepText.classList.add('step-text');
+            stepText.textContent = step;
+            container.appendChild(stepText);
+
+            const checkbox = document.createElement('input');
+            checkbox.setAttribute('type', 'checkbox');
+            checkbox.setAttribute('id', `step-${index + 1}`);
+            checkbox.setAttribute('data-step-index', index);
+            checkbox.classList.add('step-checkbox');
+            container.appendChild(checkbox);
+
+            const label = document.createElement('label');
+            label.setAttribute('for', `step-${index + 1}`);
+            label.textContent = 'Выполнено';
+            container.appendChild(label);
+
+            recipeContainer.appendChild(container);
+        });
+
+        // Add event listener to checkboxes
+        const checkboxes = document.querySelectorAll('.step-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const stepIndex = this.getAttribute('data-step-index');
+                const stepContainer = this.closest('.recipe-step');
+                if (this.checked) {
+                    stepContainer.style.backgroundColor = '#d3f0dc'; // Change background color to green when completed
+                } else {
+                    stepContainer.style.backgroundColor = '#fff'; // Revert background color to white when unchecked
+                }
+            });
+        });
+    </script>
 </body>
 </html>

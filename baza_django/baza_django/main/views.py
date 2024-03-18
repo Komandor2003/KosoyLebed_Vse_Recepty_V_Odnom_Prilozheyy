@@ -1,9 +1,11 @@
 from django.shortcuts import render
 # Create your views here.
 from main.menudata import massiv
-tmp = {'menuData': massiv()}
+tmp1 = {'menuData': massiv()}
+from main.mealrecipe import massiv_recipe
+tmp2 = {'mealRecipe': massiv_recipe()}
 def main_meals(request):
-    return render(request, 'main/main_meals.html', tmp)
+    return render(request, 'main/main_meals.html', tmp1)
 def about(request):
     return render(request, 'main/about.html')
 def profile(request):
@@ -11,4 +13,4 @@ def profile(request):
 def filters(request):
     return render(request, 'main/filters.html')
 def first_meal(request):
-    return render(request, 'main/first_meal.html')
+    return render(request, 'main/first_meal.html', tmp2)

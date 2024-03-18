@@ -15,7 +15,7 @@ def massiv():
             "containsMeat": 1,
             "seafood": 0,
             "healthy": 0,
-            "drink": 0,
+            "drink": 1,
             "difficulty": "Легкий"
         },
         {
