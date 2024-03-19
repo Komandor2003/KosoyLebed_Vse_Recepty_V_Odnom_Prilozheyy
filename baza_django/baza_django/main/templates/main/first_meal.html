@@ -39,7 +39,6 @@
         .nav-link:hover {
             color: #ffa500;
         }
-
         .recipe-step {
             margin: 20px;
             padding: 20px;
@@ -61,8 +60,7 @@
             font-weight: bold;
             color: #537373;
         }
-
-       #recipe-info-container {
+        #recipe-info-container {
             margin: 20px;
             padding: 20px;
             border-radius: 10px;
@@ -73,7 +71,6 @@
             position: relative;
             width: calc(100% - 80px);
         }
-
         #recipe-container {
             display: flex;
             flex-wrap: wrap;
@@ -98,8 +95,6 @@
             width: 100%;
             height: auto;
         }
-
-        /* Добавленные стили для иконок */
         .icon-container {
             position: absolute;
             top: 0;
@@ -107,8 +102,8 @@
             padding: 10px;
         }
         .icon {
-            font-size: 24px; /* Размер иконок */
-            margin-right: 5px; /* Пространство между иконками */
+            font-size: 24px;
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -128,7 +123,7 @@
         <p>&copy; 2024 Косой Лебедь</p>
     </footer>
     <script>
-        const recipeData = {{ mealRecipe|safe }}
+        const recipeData = {{ mealRecipe|safe }};
 
         const recipeInfoContainer = document.getElementById('recipe-info-container');
 
