@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Автозаполнение</title>
+<style>
+  #suggestions {
+    display: none;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    position: absolute;
+    width: 200px;
+  }
+  #suggestions ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  #suggestions ul li {
+    padding: 5px;
+    cursor: pointer;
+  }
+  #suggestions ul li:hover {
+    background-color: #ddd;
+  }
+</style>
+</head>
+<body>
+<a href="main" class="nav-link">Главная</a>
+<input type="text" id="inputField" oninput="showSuggestions()">
+
+<div id="suggestions"></div>
+
+<script>
+  function showSuggestions() {
+    const suggestionsList = {{ massivPoiska|safe }}
+
+    const input = document.getElementById('inputField').value.toLowerCase();
+    const suggestions = document.getElementById('suggestions');
+    suggestions.innerHTML = '';
+
+    const matchingSuggestions = suggestionsList.filter(item => item.toLowerCase().startsWith(input));
+
+    if (input.length === 0 || matchingSuggestions.length === 0) {
+      suggestions.style.display = 'none';
+    } else {
+      matchingSuggestions.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.textContent = item;
+        listItem.onclick = function() {
+          document.getElementById('inputField').value = item;
+          suggestions.style.display = 'none';
+        };
+        suggestions.appendChild(listItem);
+      });
+      suggestions.style.display = 'block';
+    }
+  }
+</script>
+
+</body>
+</html>
