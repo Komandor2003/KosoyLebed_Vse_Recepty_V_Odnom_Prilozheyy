@@ -14,7 +14,7 @@ def profile(request):
 def filters(request):
     return render(request, 'main/filters.html')
 def first_meal(request):
-    tmp2 = {'mealRecipe': massiv_recipe(1)}
+    tmp2 = {'mealRecipe': massiv_recipe(id)}
     return render(request, 'main/first_meal.html', tmp2)
 def test_poiska(request):
     tmp3 = {'massivPoiska': massiv_poiska()}
