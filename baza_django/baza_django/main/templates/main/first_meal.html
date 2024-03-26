@@ -123,151 +123,181 @@
         <p>&copy; 2024 Косой Лебедь</p>
     </footer>
     <script>
-        const recipeData = {{ mealRecipe|safe }};
-
-        const recipeInfoContainer = document.getElementById('recipe-info-container');
-
-        const recipeName = document.createElement('h2');
-        recipeName.textContent = recipeData.mealRecipe['Название'];
-        recipeInfoContainer.appendChild(recipeName);
-
-        const recipeInfo = document.createElement('h3');
-        recipeInfo.textContent = recipeData.mealRecipe['Описание'];
-        recipeInfoContainer.appendChild(recipeInfo);
-
-        const caloriesInfo = document.createElement('p');
-        caloriesInfo.innerHTML = `<strong>Калории:</strong> ${recipeData.mealRecipe['calories']}`;
-        recipeInfoContainer.appendChild(caloriesInfo);
-
-        const weightInfo = document.createElement('p');
-        weightInfo.innerHTML = `<strong>Вес порции:</strong> ${recipeData.mealRecipe['totalWeight']}`;
-        recipeInfoContainer.appendChild(weightInfo);
-
-        const mealTimeInfo = document.createElement('p');
-        mealTimeInfo.innerHTML = `<strong>Время приема:</strong> ${recipeData.mealRecipe['mealTime'].join(', ')}`;
-        recipeInfoContainer.appendChild(mealTimeInfo);
-
-        const ingredientsHeader = document.createElement('h3');
-        ingredientsHeader.textContent = 'Ингредиенты:';
-        recipeInfoContainer.appendChild(ingredientsHeader);
-
-        const ingredientsList = document.createElement('ul');
-        recipeData.mealRecipe['Ингредиенты'].forEach(ingredient => {
-            const listItem = document.createElement('li');
-            listItem.textContent = ingredient;
-            ingredientsList.appendChild(listItem);
-        });
-        recipeInfoContainer.appendChild(ingredientsList);
-
-        const recipeSteps = recipeData.mealRecipe['Шаги'];
-        const recipeContainer = document.getElementById('recipe-container');
-
-        recipeSteps.forEach((step, index) => {
-            const container = document.createElement('div');
-            container.classList.add('recipe-step');
-
-            const stepContent = document.createElement('div');
-            stepContent.classList.add('step-content');
-
-            const stepNumber = document.createElement('p');
-            stepNumber.classList.add('step-number');
-            stepNumber.textContent = `Шаг ${index + 1}`;
-            stepContent.appendChild(stepNumber);
-
-            const stepText = document.createElement('p');
-            stepText.classList.add('step-text');
-            stepText.textContent = step.text;
-            stepContent.appendChild(stepText);
-
-            container.appendChild(stepContent);
-
-            const imageContainer = document.createElement('div');
-            imageContainer.classList.add('image-container');
-
-            const image = document.createElement('img');
-            image.setAttribute('src', step.image);
-            image.setAttribute('alt', `Изображение для Шага ${index + 1}`);
-            imageContainer.appendChild(image);
-
-            container.appendChild(imageContainer);
-
-            const checkbox = document.createElement('input');
-            checkbox.setAttribute('type', 'checkbox');
-            checkbox.setAttribute('id', `step-${index + 1}`);
-            checkbox.setAttribute('data-step-index', index);
-            checkbox.classList.add('step-checkbox');
-            container.appendChild(checkbox);
-
-            const label = document.createElement('label');
-            label.setAttribute('for', `step-${index + 1}`);
-            label.textContent = 'Выполнено';
-            container.appendChild(label);
-
-            recipeContainer.appendChild(container);
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const index = urlParams.get('index');
+            if (index) {
+                getRecipe(index);
+            }
         });
 
-        const checkboxes = document.querySelectorAll('.step-checkbox');
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const stepIndex = this.getAttribute('data-step-index');
-                const stepContainer = this.closest('.recipe-step');
-                if (this.checked) {
-                    stepContainer.style.backgroundColor = '#d3f0dc';
-                } else {
-                    stepContainer.style.backgroundColor = '#fff';
+        function getRecipe(index) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/get_recipe/?index=" + index, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        var recipeData = JSON.parse(xhr.responseText);
+                        displayRecipe(recipeData);
+                    } else {
+                        console.error('Ошибка при извлечении данных рецепта.');
+                    }
                 }
+            };
+            xhr.send();
+        }
+
+        function displayRecipe(recipeData) {
+            const recipeInfoContainer = document.getElementById('recipe-info-container');
+            if (!recipeData || !recipeData.mealRecipe) {
+                console.error('Данные рецепта неверны.');
+                return;
+            }
+
+            const mealRecipe = recipeData.mealRecipe;
+
+            const recipeName = document.createElement('h2');
+            recipeName.textContent = mealRecipe['Название'];
+            recipeInfoContainer.appendChild(recipeName);
+
+            const recipeInfo = document.createElement('h3');
+            recipeInfo.textContent = mealRecipe['Описание'];
+            recipeInfoContainer.appendChild(recipeInfo);
+
+            const caloriesInfo = document.createElement('p');
+            caloriesInfo.innerHTML = `<strong>Калории:</strong> ${mealRecipe['calories']}`;
+            recipeInfoContainer.appendChild(caloriesInfo);
+
+            const weightInfo = document.createElement('p');
+            weightInfo.innerHTML = `<strong>Вес порции:</strong> ${mealRecipe['totalWeight']}`;
+            recipeInfoContainer.appendChild(weightInfo);
+
+            const mealTimeInfo = document.createElement('p');
+            mealTimeInfo.innerHTML = `<strong>Время приема:</strong> ${mealRecipe['mealTime'].join(', ')}`;
+            recipeInfoContainer.appendChild(mealTimeInfo);
+
+            const ingredientsHeader = document.createElement('h3');
+            ingredientsHeader.textContent = 'Ингредиенты:';
+            recipeInfoContainer.appendChild(ingredientsHeader);
+
+            const ingredientsList = document.createElement('ul');
+            mealRecipe['Ингредиенты'].forEach(ingredient => {
+                const listItem = document.createElement('li');
+                listItem.textContent = ingredient;
+                ingredientsList.appendChild(listItem);
             });
-        });
+            recipeInfoContainer.appendChild(ingredientsList);
 
-        const iconContainer = document.createElement('div');
-        iconContainer.classList.add('icon-container');
+            const recipeSteps = mealRecipe['Шаги'];
+            const recipeContainer = document.getElementById('recipe-container');
 
-        if (recipeData.mealRecipe.containsMeat === 1) {
-            const meatIcon = document.createElement('i');
-            meatIcon.classList.add('fas', 'fa-solid', 'fa-drumstick-bite', 'icon');
-            meatIcon.title = 'Содержит мясо';
-            iconContainer.appendChild(meatIcon);
-        }
-        if (recipeData.mealRecipe.seafood === 1) {
-            const seaFoodIcon = document.createElement('i');
-            seaFoodIcon.classList.add('fas', 'fa-solid', 'fa-fish', 'icon');
-            seaFoodIcon.title = 'Содержит морепродукты';
-            iconContainer.appendChild(seaFoodIcon);
-        }
-        if (recipeData.mealRecipe.healthy === 1) {
-            const healthyIcon = document.createElement('i');
-            healthyIcon.classList.add('fas', 'fa-solid', 'fa-apple-alt', 'icon');
-            healthyIcon.title = 'Здоровое блюдо';
-            iconContainer.appendChild(healthyIcon);
-        }
-        if (recipeData.mealRecipe.drink === 1) {
-            const drinkIcon = document.createElement('i');
-            drinkIcon.classList.add('fas', 'fa-solid', 'fa-coffee', 'icon');
-            drinkIcon.title = 'Напиток';
-            iconContainer.appendChild(drinkIcon);
-        }
+            recipeSteps.forEach((step, index) => {
+                const container = document.createElement('div');
+                container.classList.add('recipe-step');
 
-        const difficultyIcon = document.createElement('i');
-        difficultyIcon.classList.add('fas', 'fa-puzzle-piece', 'icon');
-        difficultyIcon.title = `Сложность: ${recipeData.mealRecipe.difficulty}`;
-        iconContainer.appendChild(difficultyIcon);
+                const stepContent = document.createElement('div');
+                stepContent.classList.add('step-content');
 
-        switch (recipeData.mealRecipe.difficulty) {
-            case "Легкий":
-                difficultyIcon.style.color = "green";
-                break;
-            case "Средний":
-                difficultyIcon.style.color = "orange";
-                break;
-            case "Сложный":
-                difficultyIcon.style.color = "red";
-                break;
-            default:
-                difficultyIcon.style.color = "black";
-        }
+                const stepNumber = document.createElement('p');
+                stepNumber.classList.add('step-number');
+                stepNumber.textContent = `Шаг ${index + 1}`;
+                stepContent.appendChild(stepNumber);
 
-        if (iconContainer.children.length > 0) {
-            recipeInfoContainer.appendChild(iconContainer);
+                const stepText = document.createElement('p');
+                stepText.classList.add('step-text');
+                stepText.textContent = step.text;
+                stepContent.appendChild(stepText);
+
+                container.appendChild(stepContent);
+
+                const imageContainer = document.createElement('div');
+                imageContainer.classList.add('image-container');
+
+                const image = document.createElement('img');
+                image.setAttribute('src', step.image);
+                image.setAttribute('alt', `Изображение для Шага ${index + 1}`);
+                imageContainer.appendChild(image);
+
+                container.appendChild(imageContainer);
+
+                const checkbox = document.createElement('input');
+                checkbox.setAttribute('type', 'checkbox');
+                checkbox.setAttribute('id', `step-${index + 1}`);
+                checkbox.setAttribute('data-step-index', index);
+                checkbox.classList.add('step-checkbox');
+                container.appendChild(checkbox);
+
+                const label = document.createElement('label');
+                label.setAttribute('for', `step-${index + 1}`);
+                label.textContent = 'Выполнено';
+                container.appendChild(label);
+
+                recipeContainer.appendChild(container);
+            });
+
+            const checkboxes = document.querySelectorAll('.step-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const stepIndex = this.getAttribute('data-step-index');
+                    const stepContainer = this.closest('.recipe-step');
+                    if (this.checked) {
+                        stepContainer.style.backgroundColor = '#d3f0dc';
+                    } else {
+                        stepContainer.style.backgroundColor = '#fff';
+                    }
+                });
+            });
+
+            const iconContainer = document.createElement('div');
+            iconContainer.classList.add('icon-container');
+
+            if (mealRecipe.containsMeat === 1) {
+                const meatIcon = document.createElement('i');
+                meatIcon.classList.add('fas', 'fa-solid', 'fa-drumstick-bite', 'icon');
+                meatIcon.title = 'Содержит мясо';
+                iconContainer.appendChild(meatIcon);
+            }
+            if (mealRecipe.seafood === 1) {
+                const seaFoodIcon = document.createElement('i');
+                seaFoodIcon.classList.add('fas', 'fa-solid', 'fa-fish', 'icon');
+                seaFoodIcon.title = 'Содержит морепродукты';
+                iconContainer.appendChild(seaFoodIcon);
+            }
+            if (mealRecipe.healthy === 1) {
+                const healthyIcon = document.createElement('i');
+                healthyIcon.classList.add('fas', 'fa-solid', 'fa-apple-alt', 'icon');
+                healthyIcon.title = 'Здоровое блюдо';
+                iconContainer.appendChild(healthyIcon);
+            }
+            if (mealRecipe.drink === 1) {
+                const drinkIcon = document.createElement('i');
+                drinkIcon.classList.add('fas', 'fa-solid', 'fa-coffee', 'icon');
+                drinkIcon.title = 'Напиток';
+                iconContainer.appendChild(drinkIcon);
+            }
+
+            const difficultyIcon = document.createElement('i');
+            difficultyIcon.classList.add('fas', 'fa-puzzle-piece', 'icon');
+            difficultyIcon.title = `Сложность: ${mealRecipe.difficulty}`;
+            iconContainer.appendChild(difficultyIcon);
+
+            switch (mealRecipe.difficulty) {
+                case "Легкий":
+                    difficultyIcon.style.color = "green";
+                    break;
+                case "Средний":
+                    difficultyIcon.style.color = "orange";
+                    break;
+                case "Сложный":
+                    difficultyIcon.style.color = "red";
+                    break;
+                default:
+                    difficultyIcon.style.color = "black";
+            }
+
+            if (iconContainer.children.length > 0) {
+                recipeInfoContainer.appendChild(iconContainer);
+            }
         }
     </script>
 </body>

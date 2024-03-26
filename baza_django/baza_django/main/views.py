@@ -1,10 +1,7 @@
-from django.shortcuts import render
 from django.http import JsonResponse
-# Create your views here.
+from django.shortcuts import render
 from main.menudata import massiv
-
 from main.mealrecipe import massiv_recipe
-
 from main.massiv_poiska import massiv_poiska
 
 def main_meals(request):
@@ -17,8 +14,15 @@ def profile(request):
 def filters(request):
     return render(request, 'main/filters.html')
 def first_meal(request):
-    tmp2 = {'mealRecipe': massiv_recipe()}
+    tmp2 = {'mealRecipe': massiv_recipe(1)}
     return render(request, 'main/first_meal.html', tmp2)
 def test_poiska(request):
     tmp3 = {'massivPoiska': massiv_poiska()}
     return render(request, 'main/test_poiska.html', tmp3)
+def get_recipe(request):
+    index = request.GET.get('index', None)
+    if index is not None:
+        recipe_data = massiv_recipe(int(index))
+        return JsonResponse(recipe_data)
+    else:
+        return JsonResponse({'error': 'Отсутствует параметр индекса.'}, status=400)

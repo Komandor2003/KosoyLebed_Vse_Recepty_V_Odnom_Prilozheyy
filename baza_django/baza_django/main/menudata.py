@@ -1,6 +1,7 @@
 def massiv():
     menuData = [
         {
+            "index": 0,
             "name": "Салат Цезарь",
             "image": "caesar.jpg",
             "description": "Свежий салат с куриным филе, листьями салата айсберг и хрустящими крутонами.",
@@ -14,6 +15,7 @@ def massiv():
             "difficulty": "Легкий"
         },
         {
+            "index": 1,
             "name": "Паста Карбонара",
             "image": "carbonara.jpg",
             "description": "Итальянская паста с беконом, яйцами и сливками.",
@@ -27,6 +29,7 @@ def massiv():
             "difficulty": "Средний"
         },
         {
+            "index": 2,
             "name": "Суп-лапша",
             "image": "soup.jpg",
             "description": "Питательный суп с говядиной, лапшой и свежими овощами.",
@@ -40,6 +43,7 @@ def massiv():
             "difficulty": "Средний"
         },
         {
+            "index": 3,
             "name": "Омлет",
             "image": "omelette.jpg",
             "description": "Нежный омлет с помидорами и сыром.",
@@ -53,6 +57,7 @@ def massiv():
             "difficulty": "Легкий"
         },
         {
+            "index": 4,
             "name": "Рис с овощами",
             "image": "rice_vegetables.jpg",
             "description": "Паровой рис с морковью, горошком и луком.",
@@ -66,6 +71,7 @@ def massiv():
             "difficulty": "Легкий"
         },
         {
+            "index": 5,
             "name": "Куриные крылышки",
             "image": "chicken_wings.jpg",
             "description": "Жареные куриные крылышки с соусом барбекю.",
@@ -79,6 +85,7 @@ def massiv():
             "difficulty": "Средний"
         },
         {
+            "index": 6,
             "name": "Гречневая каша",
             "image": "buckwheat_porridge.jpg",
             "description": "Ароматная гречневая каша с маслом.",
@@ -92,6 +99,7 @@ def massiv():
             "difficulty": "Легкий"
         },
         {
+            "index": 7,
             "name": "Суп-харчо",
             "image": "harchosoup.jpg",
             "description": "Пикантный суп с говядиной, рисом и специями.",
@@ -105,6 +113,7 @@ def massiv():
             "difficulty": "Средний"
         },
         {
+            "index": 8,
             "name": "Пицца",
             "image": "pizza.jpg",
             "description": "Аппетитная пицца с ветчиной, сыром и соусом.",
@@ -118,6 +127,7 @@ def massiv():
             "difficulty": "Сложный"
         },
         {
+            "index": 9,
             "name": "Фруктовый салат",
             "image": "fruitsalad.jpg",
             "description": "Свежий салат с яблоками, бананами, апельсинами и грушами.",
