@@ -149,5 +149,7 @@ def edit_meal(table, params, vals):
 
 def serch_meals(input):
     tmp = conn.select_for_search(table= "meals", param = "name", val=input)
-    tmp = tmp[0]
-    return (tmp[meals['name']])
+    return_mas = []
+    for i in tmp:
+        return_mas.append(i[meals['name']])
+    return return_mas
