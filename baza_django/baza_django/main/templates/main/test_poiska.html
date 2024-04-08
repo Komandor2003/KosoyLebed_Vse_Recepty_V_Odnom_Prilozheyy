@@ -32,8 +32,14 @@
 <div id="suggestions"></div>
 
 <script>
-  function showSuggestions() {
-    const suggestionsList = {{ massivPoiska|safe }}
+  async function fetchSuggestions() {
+    const response = await fetch('/get_suggestions/');
+    const data = await response.json();
+    return data.suggestions;
+  }
+
+  async function showSuggestions() {
+    const suggestionsList = await fetchSuggestions();
 
     const input = document.getElementById('inputField').value.toLowerCase();
     const suggestions = document.getElementById('suggestions');

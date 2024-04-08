@@ -26,3 +26,6 @@ def get_recipe(request):
         return JsonResponse(recipe_data)
     else:
         return JsonResponse({'error': 'Отсутствует параметр индекса.'}, status=400)
+def get_suggestions(request):
+    suggestions_list = massiv_poiska()
+    return JsonResponse({'suggestions': suggestions_list})
