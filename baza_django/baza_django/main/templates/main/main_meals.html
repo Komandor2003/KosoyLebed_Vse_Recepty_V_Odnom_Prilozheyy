@@ -118,7 +118,6 @@
     </header>
     <nav>
         <a href="main" class="nav-link">Главная</a> |
-        <a href="test_poiska" class="nav-link">тестовая страница поиска</a>
         <a href="profile" class="nav-link">Личный кабинет</a> |
         <a href="about" class="nav-link">О нас</a> |
         <a href="filters" class="nav-link">Настройки фильтров</a>
@@ -137,10 +136,9 @@
                 <div class="info">
                     <h2>${item.name}</h2>
                     <p class="description">${item.description}</p>
+                    <p class="meal-time">Время приема: ${Array.isArray(item.mealTime) ? item.mealTime.join(', ') : item.mealTime}</p>
                     <p class="total-weight">Общая граммовка: ${item.totalWeight}</p>
                     <p class="calories">Калорийность: ${item.calories}</p>
-                    <p class="meal-time">Время приема: ${Array.isArray(item.mealTime) ? item.mealTime.join(', ') : item.mealTime}</p>
-<!--                    <p class="index">Индекс: ${item.index}</p>-->
                     <div class="button-container">
                         <button class="order-button" data-index="${item.index}">Хочу готовить!</button>
                     </div>
