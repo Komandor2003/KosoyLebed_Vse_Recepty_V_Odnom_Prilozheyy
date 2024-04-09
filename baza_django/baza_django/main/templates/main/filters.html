@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Скоро здесь будет страница фильтров блюд</title>
-	<style>
-		body {
-			font-family: 'Roboto', sans-serif;
-			background-color: #f3f3f3;
-			margin: 0;
-			padding: 0;
-			color: #333;
-			text-align: center;
-			min-height: 100vh;
-			display: flex;
-			flex-direction: column;
-		}
-		nav {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фильтры и поиск</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        nav {
             background-color: #537373;
             padding: 10px 0;
             text-align: center;
@@ -32,48 +32,169 @@
         nav a:hover {
             color: #ffa500;
         }
-		.content-container {
-			flex-grow: 1;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-		}
-		footer {
-			background-color: #2f4f4f;
-			color: white;
-			text-align: center;
-			padding: 10px 0;
-			width: 100%;
-			position: fixed;
-			bottom: 0;
-		}
-		header {
-			background-color: #2f4f4f;
-			padding: 10px 0;
-			text-align: center;
-		}
-		header h1 {
-			color: white;
-		}
-	</style>
+        .content-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        footer {
+            background-color: #2f4f4f;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+        header {
+            background-color: #2f4f4f;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header h1 {
+            color: white;
+        }
+        #search-container {
+            margin-top: 20px;
+            display: flex; /* Используем flexbox */
+            flex-direction: column;
+            align-items: center; /* Центрируем элементы по горизонтали */
+        }
+
+        #input-container {
+            position: relative;
+            margin-bottom: 10px; /* Добавляем небольшое расстояние между полем ввода и кнопкой */
+        }
+
+        #inputField {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #suggestions {
+            display: none;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            width: 300px;
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: left;
+            padding-left: 5px;
+        }
+
+        #suggestions ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #suggestions ul li {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        #suggestions ul li:hover {
+            background-color: #ddd;
+        }
+
+        #output-container {
+            margin-top: 20px;
+        }
+
+        #outputField {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            width: 300px;
+            margin-top: 10px;
+        }
+
+        #addButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #537373;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #addButton:hover {
+            background-color: #405858;
+        }
+    </style>
 </head>
 <body>
-	<header>
-		<h1>Приложение рецептов Косой Лебедь</h1>
-	</header>
-	<nav>
-		<a href="main" class="nav-link">Главная</a> |
-		<a href="profile" class="nav-link">Личный кабинет</a> |
-		<a href="about" class="nav-link">О нас</a> |
-		<a href="filters" class="nav-link">Настройки фильтров</a>
-	</nav>
-	<div class="content-container">
-		<h1>Скоро здесь будет страница фильтров блюд</h1>
-		<p>Мы работаем над созданием страницы фильтров для вас. Пожалуйста, ожидайте.</p>
-	</div>
-	<footer>
-		<p>&copy; 2024 Косой Лебедь</p>
-	</footer>
+<header>
+    <h1>Приложение рецептов Косой Лебедь</h1>
+</header>
+<nav>
+    <a href="main" class="nav-link">Главная</a> |
+    <a href="profile" class="nav-link">Личный кабинет</a> |
+    <a href="about" class="nav-link">О нас</a> |
+    <a href="filters" class="nav-link">Настройки фильтров</a>
+</nav>
+<div id="search-container">
+    <div id="input-container">
+        <input type="text" id="inputField" oninput="showSuggestions()" placeholder="Введите запрос">
+        <div id="suggestions"></div>
+    </div>
+    <button id="addButton" onclick="addToOutput()">Добавить в ячейку</button>
+</div>
+
+<div id="output-container">
+    <h2>Вот что мы нашли:</h2>
+    <div id="outputField"></div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Косой Лебедь</p>
+</footer>
+<script>
+    async function fetchSuggestions(input) {
+        const response = await fetch(`/get_suggestions/?input=${input}`);
+        const data = await response.json();
+        return data.suggestions;
+    }
+
+    async function showSuggestions() {
+        const input = document.getElementById('inputField').value.toLowerCase();
+        const suggestionsList = await fetchSuggestions(input);
+        const suggestions = document.getElementById('suggestions');
+        suggestions.innerHTML = '';
+
+        if (input.length === 0 || suggestionsList.length === 0) {
+            suggestions.style.display = 'none';
+        } else {
+            suggestionsList.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = item;
+                listItem.onclick = function() {
+                    document.getElementById('inputField').value = item;
+                    suggestions.style.display = 'none';
+                };
+                suggestions.appendChild(listItem);
+            });
+            suggestions.style.display = 'block';
+        }
+    }
+
+    function addToOutput() {
+        const selectedText = document.getElementById('inputField').value;
+        const outputField = document.getElementById('outputField');
+        outputField.textContent = selectedText;
+    }
+</script>
 </body>
 </html>
