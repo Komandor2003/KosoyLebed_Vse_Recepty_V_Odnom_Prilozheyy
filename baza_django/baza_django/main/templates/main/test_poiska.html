@@ -32,25 +32,22 @@
 <div id="suggestions"></div>
 
 <script>
-  async function fetchSuggestions() {
-    const response = await fetch('/get_suggestions/');
+  async function fetchSuggestions(input) {
+    const response = await fetch(`/get_suggestions/?input=${input}`);
     const data = await response.json();
     return data.suggestions;
   }
 
   async function showSuggestions() {
-    const suggestionsList = await fetchSuggestions();
-
     const input = document.getElementById('inputField').value.toLowerCase();
+    const suggestionsList = await fetchSuggestions(input);
     const suggestions = document.getElementById('suggestions');
     suggestions.innerHTML = '';
 
-    const matchingSuggestions = suggestionsList.filter(item => item.toLowerCase().startsWith(input));
-
-    if (input.length === 0 || matchingSuggestions.length === 0) {
+    if (input.length === 0 || suggestionsList.length === 0) {
       suggestions.style.display = 'none';
     } else {
-      matchingSuggestions.forEach(item => {
+      suggestionsList.forEach(item => {
         const listItem = document.createElement('li');
         listItem.textContent = item;
         listItem.onclick = function() {
