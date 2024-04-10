@@ -43,7 +43,7 @@ class connection():
 
         try:
             cursor = self.connect.cursor()
-            query = f'SELECT * FROM {table} WHERE {param} LIKE %s LIMIT 10'
+            query = f'SELECT * FROM {table} WHERE {param} LIKE %s'
             cursor.execute(query,  (val + '%',))
             results = cursor.fetchall()
             cursor.close()
@@ -153,3 +153,15 @@ def serch_meals(input):
     for i in tmp:
         return_mas.append(i[meals['name']])
     return return_mas
+
+def take_meals_search(val):
+    tmp_all = conn.select_group(table="meals", param = "name", val = val)
+    response = []
+    for tmp in tmp_all:
+        response.append({"index" : tmp[meals['id']], "name" : tmp[meals['name']], "image" : tmp[meals['image']],
+                         "description" : tmp[meals['description']], "totalWeight" : tmp[meals['totalWeight']],
+                         "calories" : tmp[meals['calories']], "mealTime" : tmp[meals['mealTime']],
+                         "containsMeat" : tmp[meals['containsMeat']], "seafood" : tmp[meals['seafood']],
+                         "healthy" : tmp[meals['healthy']], "drink" : tmp[meals['drink']],
+                         "difficulty" : tmp[meals['difficulty']]})
+    return response
