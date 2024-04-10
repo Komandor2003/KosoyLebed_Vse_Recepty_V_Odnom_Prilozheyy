@@ -8,7 +8,7 @@ urlpatterns = [
     path('profile', views.profile),
     path('filters', views.filters),
     path('first_meal', views.first_meal),
-    path('test_poiska', views.test_poiska),
     path('get_recipe/', get_recipe, name='get_recipe'),
     path('get_suggestions/', views.get_suggestions, name='get_suggestions'),
+    path('get_suggestions_in_containers/', views.get_suggestions_in_containers, name='get_suggestions_in_containers'),
 ]

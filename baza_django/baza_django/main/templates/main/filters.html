@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фильтры и поиск</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <script src="https://kit.fontawesome.com/12a39ee336.js" crossorigin="anonymous"></script>
+    <title>Поиск блюд - Косой Лебедь</title>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -16,12 +18,14 @@
             display: flex;
             flex-direction: column;
         }
+
         nav {
             background-color: #537373;
             padding: 10px 0;
             text-align: center;
             transition: background-color 0.3s ease;
         }
+
         nav a {
             color: white;
             text-decoration: none;
@@ -29,16 +33,145 @@
             font-size: 18px;
             transition: color 0.3s ease;
         }
+
         nav a:hover {
             color: #ffa500;
         }
-        .content-container {
-            flex-grow: 1;
+
+        #search-container {
+            margin-top: 20px;
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
+            align-items: center;
         }
+
+        #input-container {
+            position: relative;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        #inputField {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            flex: 1;
+        }
+
+        #addButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 10px;
+        }
+
+        #addButton:hover {
+            background-color: #45a049;
+        }
+
+        #suggestions {
+            position: absolute;
+            width: calc(100% - 22px);
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            display: none;
+            top: calc(100% + 5px);
+            left: 0;
+        }
+
+        #suggestions li {
+            padding: 10px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        #suggestions li:hover {
+            background-color: #f2f2f2;
+        }
+
+        #output-container {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #output-container li {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        #output-container li:hover {
+            transform: translateY(-5px);
+        }
+
+        #output-container img {
+            width: 100%;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            object-fit: cover;
+        }
+
+        #output-container .info {
+            padding: 20px;
+            text-align: left;
+            flex: 1;
+        }
+
+        #output-container p {
+            margin: 10px 0;
+        }
+
+        #output-container .button-container {
+            margin-top: 20px;
+        }
+
+        #output-container .order-button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease;
+        }
+
+        #output-container .order-button:hover {
+            background-color: #45a049;
+        }
+
+        #output-container .icon-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        #output-container .icon {
+            font-size: 24px;
+            margin-left: 5px;
+        }
+
         footer {
             background-color: #2f4f4f;
             color: white;
@@ -48,153 +181,240 @@
             position: fixed;
             bottom: 0;
         }
+
         header {
             background-color: #2f4f4f;
             padding: 10px 0;
             text-align: center;
         }
+
         header h1 {
             color: white;
         }
-        #search-container {
+
+        #filter-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             margin-top: 20px;
-            display: flex; /* Используем flexbox */
-            flex-direction: column;
-            align-items: center; /* Центрируем элементы по горизонтали */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
         }
 
-        #input-container {
-            position: relative;
-            margin-bottom: 10px; /* Добавляем небольшое расстояние между полем ввода и кнопкой */
-        }
-
-        #inputField {
-            width: 300px;
-            padding: 10px;
+        #filter-container label {
+            margin-right: 20px;
             font-size: 16px;
+            cursor: pointer;
+        }
+
+        #filter-container input[type="checkbox"],
+        #filter-container select {
+            margin-right: 5px;
+        }
+
+        #filter-container select {
+            padding: 8px;
             border-radius: 5px;
             border: 1px solid #ccc;
-        }
-
-        #suggestions {
-            display: none;
-            border: 1px solid #ccc;
+            font-size: 16px;
             background-color: #f9f9f9;
-            width: 300px;
-            position: absolute;
-            top: calc(100% + 5px);
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-            max-height: 200px;
-            overflow-y: auto;
-            text-align: left;
-            padding-left: 5px;
+            color: #333;
+            transition: border-color 0.3s ease;
         }
 
-        #suggestions ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
+        #filter-container select:focus {
+            outline: none;
+            border-color: #4caf50;
         }
 
-        #suggestions ul li {
-            padding: 5px;
-            cursor: pointer;
+        #filter-container select:hover {
+            border-color: #999;
         }
 
-        #suggestions ul li:hover {
-            background-color: #ddd;
+        #filter-container input[type="checkbox"]:checked + label {
+            font-weight: bold;
+            color: #4caf50;
         }
 
-        #output-container {
-            margin-top: 20px;
-        }
-
-        #outputField {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            width: 300px;
-            margin-top: 10px;
-        }
-
-        #addButton {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #537373;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #addButton:hover {
-            background-color: #405858;
-        }
     </style>
 </head>
 <body>
-<header>
-    <h1>Приложение рецептов Косой Лебедь</h1>
-</header>
-<nav>
-    <a href="main" class="nav-link">Главная</a> |
-    <a href="profile" class="nav-link">Личный кабинет</a> |
-    <a href="about" class="nav-link">О нас</a> |
-    <a href="filters" class="nav-link">Настройки фильтров</a>
-</nav>
-<div id="search-container">
-    <div id="input-container">
-        <input type="text" id="inputField" oninput="showSuggestions()" placeholder="Введите запрос">
-        <div id="suggestions"></div>
+    <header>
+        <h1>Приложение рецептов Косой Лебедь</h1>
+    </header>
+    <nav>
+        <a href="main" class="nav-link">Главная</a> |
+        <a href="profile" class="nav-link">Личный кабинет</a> |
+        <a href="about" class="nav-link">О нас</a> |
+        <a href="filters" class="nav-link">Настройки фильтров</a>
+    </nav>
+    <div id="filter-container">
+            <label><input type="checkbox" id="meatFilter"> Содержит мясо</label>
+            <label><input type="checkbox" id="seafoodFilter"> Содержит морепродукты</label>
+            <label><input type="checkbox" id="healthyFilter"> Здоровая пища</label>
+            <label><input type="checkbox" id="drinkFilter"> Напиток</label>
+            <label for="difficultySelect">Сложность:</label>
+            <select id="difficultySelect">
+                <option value="any">Любая</option>
+                <option value="easy">Легкий</option>
+                <option value="medium">Средний</option>
+                <option value="hard">Сложный</option>
+            </select>
+        </div>
+    <div id="search-container">
+        <div id="input-container">
+            <input type="text" id="inputField" oninput="showSuggestionsAndFetch()" placeholder="Введите запрос">
+            <button id="addButton">Вывести блюда</button>
+            <div id="suggestions"></div>
+        </div>
+        <ul id="output-container"></ul>
     </div>
-    <button id="addButton" onclick="addToOutput()">Добавить в ячейку</button>
-</div>
-
-<div id="output-container">
-    <h2>Вот что мы нашли:</h2>
-    <div id="outputField"></div>
-</div>
-
-<footer>
-    <p>&copy; 2024 Косой Лебедь</p>
-</footer>
-<script>
-    async function fetchSuggestions(input) {
-        const response = await fetch(`/get_suggestions/?input=${input}`);
-        const data = await response.json();
-        return data.suggestions;
-    }
-
-    async function showSuggestions() {
-        const input = document.getElementById('inputField').value.toLowerCase();
-        const suggestionsList = await fetchSuggestions(input);
-        const suggestions = document.getElementById('suggestions');
-        suggestions.innerHTML = '';
-
-        if (input.length === 0 || suggestionsList.length === 0) {
-            suggestions.style.display = 'none';
-        } else {
-            suggestionsList.forEach(item => {
-                const listItem = document.createElement('li');
-                listItem.textContent = item;
-                listItem.onclick = function() {
-                    document.getElementById('inputField').value = item;
-                    suggestions.style.display = 'none';
-                };
-                suggestions.appendChild(listItem);
-            });
-            suggestions.style.display = 'block';
+    <footer>
+        <p>&copy; 2024 Косой Лебедь</p>
+    </footer>
+    <script>
+        async function fetchSuggestions(input) {
+            try {
+                const response = await fetch(`/get_suggestions/?input=${input}`);
+                if (!response.ok) {
+                    throw new Error('Ошибка при получении предложений');
+                }
+                const data = await response.json();
+                return data.suggestions;
+            } catch (error) {
+                console.error('Произошла ошибка:', error);
+                return [];
+            }
         }
-    }
 
-    function addToOutput() {
-        const selectedText = document.getElementById('inputField').value;
-        const outputField = document.getElementById('outputField');
-        outputField.textContent = selectedText;
-    }
-</script>
+        async function showSuggestionsAndFetch() {
+            const input = document.getElementById('inputField').value.toLowerCase();
+            const suggestionsList = await fetchSuggestions(input);
+            const suggestions = document.getElementById('suggestions');
+            suggestions.innerHTML = '';
+
+            if (input.length === 0 || suggestionsList.length === 0) {
+                suggestions.style.display = 'none';
+            } else {
+                suggestionsList.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = item;
+                    listItem.onclick = function() {
+                        document.getElementById('inputField').value = item;
+                        suggestions.style.display = 'none';
+                    };
+                    suggestions.appendChild(listItem);
+                });
+                suggestions.style.display = 'block';
+            }
+        }
+
+        function displayData(suggestions) {
+            const outputContainer = document.getElementById('output-container');
+            outputContainer.innerHTML = '';
+            suggestions.forEach(suggestion => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <img src="${suggestion.image}" alt="${suggestion.name}">
+                    <div class="info">
+                        <h2>${suggestion.name}</h2>
+                        <p class="description">${suggestion.description}</p>
+                        <p class="meal-time">Время приема: ${Array.isArray(suggestion.mealTime) ? suggestion.mealTime.join(', ') : suggestion.mealTime}</p>
+                        <p class="total-weight">Общая граммовка: ${suggestion.totalWeight}</p>
+                        <p class="calories">Калорийность: ${suggestion.calories}</p>
+                        <div class="button-container">
+                            <button class="order-button" data-index="${suggestion.index}">Хочу готовить!</button>
+                        </div>
+                    </div>
+                `;
+
+                const orderButton = li.querySelector('.order-button');
+                orderButton.addEventListener('click', function() {
+                    var value = this.getAttribute("data-index");
+                    window.location.href = "/first_meal?index=" + value;
+                });
+
+                const iconContainer = document.createElement('div');
+                iconContainer.classList.add('icon-container');
+
+                if (suggestion.containsMeat === 1) {
+                    const meatIcon = document.createElement('i');
+                    meatIcon.classList.add('fas', 'fa-solid', 'fa-drumstick-bite', 'icon');
+                    meatIcon.title = 'Содержит мясо';
+                    iconContainer.appendChild(meatIcon);
+                }
+
+                if (suggestion.seafood === 1) {
+                    const seaFoodIcon = document.createElement('i');
+                    seaFoodIcon.classList.add('fas', 'fa-solid', 'fa-fish', 'icon');
+                    seaFoodIcon.title = 'Содержит морепродукты';
+                    iconContainer.appendChild(seaFoodIcon);
+                }
+
+                if (suggestion.healthy === 1) {
+                    const healthyIcon = document.createElement('i');
+                    healthyIcon.classList.add('fas', 'fa-solid', 'fa-apple-alt', 'icon');
+                    healthyIcon.title = 'Здоровая пища';
+                    iconContainer.appendChild(healthyIcon);
+                }
+
+                if (suggestion.drink === 1) {
+                    const drinkIcon = document.createElement('i');
+                    drinkIcon.classList.add('fas', 'fa-solid', 'fa-coffee', 'icon');
+                    drinkIcon.title = 'Напиток';
+                    iconContainer.appendChild(drinkIcon);
+                }
+
+                const difficultyIcon = document.createElement('i');
+                difficultyIcon.classList.add('fas', 'fa-puzzle-piece', 'icon');
+                difficultyIcon.title = `Сложность: ${suggestion.difficulty}`;
+                iconContainer.appendChild(difficultyIcon);
+
+                switch(suggestion.difficulty) {
+                    case "Легкий":
+                        difficultyIcon.style.color = "green";
+                        break;
+                    case "Средний":
+                        difficultyIcon.style.color = "orange";
+                        break;
+                    case "Сложный":
+                        difficultyIcon.style.color = "red";
+                        break;
+                    default:
+                        difficultyIcon.style.color = "black";
+                }
+
+                li.appendChild(iconContainer);
+
+                outputContainer.appendChild(li);
+            });
+        }
+
+        document.getElementById('addButton').addEventListener('click', async function() {
+            const input = document.getElementById('inputField').value;
+            try {
+                const response = await fetch(`/get_suggestions_in_containers/?input=${input}`);
+                if (!response.ok) {
+                    throw new Error('Ошибка при получении данных');
+                }
+                const data = await response.json();
+                displayData(data.suggestions);
+                document.getElementById('suggestions').style.display = 'none';
+            } catch (error) {
+                console.error('Произошла ошибка:', error);
+            }
+        });
+        document.addEventListener('click', function(event) {
+            const suggestions = document.getElementById('suggestions');
+            const inputField = document.getElementById('inputField');
+            if (!suggestions.contains(event.target) && event.target !== inputField) {
+                suggestions.style.display = 'none';
+            }
+        });
+
+    </script>
 </body>
 </html>

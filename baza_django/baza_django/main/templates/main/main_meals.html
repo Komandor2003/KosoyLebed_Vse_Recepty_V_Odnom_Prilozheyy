@@ -147,9 +147,8 @@
             const orderButton = li.querySelector('.order-button');
             orderButton.addEventListener('click', function() {
                 var value = this.getAttribute("data-index");
-                window.location.href = "/first_meal?index=" + value; // Переход на страницу с параметром index
+                window.location.href = "/first_meal?index=" + value;
             });
-
 
             const iconContainer = document.createElement('div');
             iconContainer.classList.add('icon-container');
